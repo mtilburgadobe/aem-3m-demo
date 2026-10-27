@@ -8,7 +8,8 @@ import { loadFragment } from '../fragment/fragment.js';
  * 3. tools:    "Search" link (href = search action, empty query param = field name),
  *              locale list (one item "US - EN" with a nested list of language links),
  *              "Account" link
- * 4. l2:       (optional) list of breadcrumb ancestors, a title link, list of L2 links
+ * 4. l2:       (optional) list of breadcrumb ancestors (links or text), a title link,
+ *              list of L2 links
  */
 
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -143,9 +144,11 @@ function buildL2(section, t) {
   crumbs.className = 'nav-breadcrumb';
   crumbs.setAttribute('aria-label', t.breadcrumb);
   const ol = document.createElement('ol');
-  [...(ancestors?.querySelectorAll('a') || [])].forEach((a) => {
+  [...(ancestors?.querySelectorAll(':scope > li') || [])].forEach((item) => {
     const li = document.createElement('li');
-    li.append(a.cloneNode(true));
+    const a = item.querySelector('a');
+    if (a) li.append(a.cloneNode(true));
+    else li.textContent = item.textContent.trim();
     ol.append(li);
   });
   const here = window.location.pathname.replace(/\/$/, '');
