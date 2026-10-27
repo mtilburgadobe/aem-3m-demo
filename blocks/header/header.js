@@ -6,18 +6,20 @@ import { loadFragment } from '../fragment/fragment.js';
  * 1. brand:    link wrapping the logo (`:3m-logo:` icon) or text
  * 2. sections: list of main menu links (nested list = dropdown)
  * 3. tools:    "Search" link (href = search action, empty query param = field name),
- *              locale link (e.g. "US - EN"), "Account" link
+ *              locale list (one item "US - EN" with a nested list of language links),
+ *              "Account" link
  * 4. l2:       (optional) list of breadcrumb ancestors, a title link, list of L2 links
  */
 
 const isDesktop = window.matchMedia('(min-width: 900px)');
+const OPEN_DROPDOWNS = '.nav-drop > button[aria-expanded="true"], .nav-locale > button[aria-expanded="true"]';
 
 const STRINGS = {
   en: {
-    search: 'Search', open: 'Open navigation', close: 'Close navigation', breadcrumb: 'Breadcrumb', l2: 'Car Personalization',
+    search: 'Search', language: 'Choose a language', open: 'Open navigation', close: 'Close navigation', breadcrumb: 'Breadcrumb', l2: 'Car Personalization',
   },
   fr: {
-    search: 'Rechercher', open: 'Ouvrir la navigation', close: 'Fermer la navigation', breadcrumb: 'Fil d’Ariane', l2: 'Personnalisation automobile',
+    search: 'Rechercher', language: 'Choisir une langue', open: 'Ouvrir la navigation', close: 'Fermer la navigation', breadcrumb: 'Fil d’Ariane', l2: 'Personnalisation automobile',
   },
 };
 
@@ -26,7 +28,7 @@ function icon(name) {
 }
 
 function closeDropdowns(scope, except) {
-  scope.querySelectorAll('.nav-drop > button[aria-expanded="true"]').forEach((b) => {
+  scope.querySelectorAll(OPEN_DROPDOWNS).forEach((b) => {
     if (b !== except) b.setAttribute('aria-expanded', 'false');
   });
 }
@@ -66,6 +68,46 @@ function buildSearch(link, t) {
     form.append(hidden);
   });
   return form;
+}
+
+function buildLocale(section, t) {
+  const item = section?.querySelector('ul > li:has(> ul)');
+  if (!item) return null;
+  const options = [...item.querySelectorAll(':scope > ul a')];
+  const label = [...item.childNodes].filter((n) => n.nodeName !== 'UL')
+    .map((n) => n.textContent).join('').trim();
+  const dir = (a) => new URL(a.href, window.location.href).pathname.replace(/[^/]*$/, '');
+  const here = window.location.pathname;
+  const current = options
+    .filter((a) => here.startsWith(dir(a)))
+    .sort((a, b) => dir(b).length - dir(a).length)[0];
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'nav-locale';
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.setAttribute('aria-expanded', 'false');
+  button.setAttribute('aria-controls', 'nav-locale-list');
+  button.setAttribute('aria-label', `${t.language}: ${label}`);
+  button.innerHTML = `<span>${label}</span>${icon('globe')}`;
+
+  const list = document.createElement('ul');
+  list.id = 'nav-locale-list';
+  options.forEach((a) => {
+    const li = document.createElement('li');
+    a.className = '';
+    if (a === current) a.setAttribute('aria-current', 'true');
+    li.append(a);
+    list.append(li);
+  });
+
+  button.addEventListener('click', () => {
+    const expanded = button.getAttribute('aria-expanded') === 'true';
+    closeDropdowns(button.closest('nav'), button);
+    button.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+  });
+  wrapper.append(button, list);
+  return wrapper;
 }
 
 function buildSections(section) {
@@ -205,13 +247,9 @@ export default async function decorate(block) {
   const toolLinks = [...(toolsSection?.querySelectorAll('a') || [])];
   const searchLink = toolLinks.find((a) => /^(search|rechercher)$/i.test(a.textContent.trim()));
   const accountLink = toolLinks.find((a) => /account|compte/i.test(a.textContent));
-  const localeLink = toolLinks.find((a) => a !== searchLink && a !== accountLink);
   if (searchLink) top.append(buildSearch(searchLink, t));
-  if (localeLink) {
-    localeLink.className = 'nav-locale';
-    localeLink.innerHTML = `<span>${localeLink.textContent.trim()}</span>${icon('globe')}`;
-    top.append(localeLink);
-  }
+  const locale = buildLocale(toolsSection, t);
+  if (locale) top.append(locale);
 
   // menu row: main sections + account
   const menu = document.createElement('div');
@@ -228,7 +266,7 @@ export default async function decorate(block) {
 
   nav.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
-    const open = nav.querySelector('.nav-drop > button[aria-expanded="true"]');
+    const open = nav.querySelector(OPEN_DROPDOWNS);
     if (open) {
       open.setAttribute('aria-expanded', 'false');
       open.focus();
