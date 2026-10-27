@@ -3,17 +3,28 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(257px, 1fr));
   gap: 24px;
 }
 
 .cards > ul > li {
-  border: 1px solid #dadada;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color);
   background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 .cards .cards-card-body {
-  margin: 16px;
+  margin: 20px;
+}
+
+.cards .cards-card-body > :first-child {
+  margin-top: 0;
+}
+
+.cards .cards-card-body h3 {
+  font-size: var(--heading-font-size-s);
 }
 
 .cards .cards-card-image {
@@ -24,4 +35,81 @@
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+}
+
+/* icons: compact link cards without borders */
+.cards.icons > ul {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.cards.icons > ul > li {
+  border: 0;
+  border-top: 4px solid var(--brand-red);
+  background-color: var(--light-color);
+}
+
+.cards.icons .cards-card-image {
+  margin: 20px 20px 0;
+}
+
+.cards.icons .cards-card-image img,
+.cards.icons .icon {
+  width: 48px;
+  height: 48px;
+  aspect-ratio: 1;
+}
+
+/* tiles: image with overlaid title link */
+.cards.tiles > ul > li {
+  position: relative;
+  isolation: isolate;
+  min-height: 280px;
+  justify-content: flex-end;
+  border: 0;
+  background: linear-gradient(160deg, #2b2b2b, #111);
+  color: var(--background-color);
+  overflow: hidden;
+}
+
+.cards.tiles .cards-card-image {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.cards.tiles .cards-card-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgb(0 0 0 / 75%) 0%, rgb(0 0 0 / 0%) 65%);
+}
+
+.cards.tiles .cards-card-image img {
+  height: 100%;
+  aspect-ratio: auto;
+  transition: transform 0.4s ease;
+}
+
+.cards.tiles > ul > li:hover .cards-card-image img {
+  transform: scale(1.04);
+}
+
+.cards.tiles .cards-card-body h3 {
+  color: inherit;
+}
+
+.cards.tiles a:any-link {
+  color: inherit;
+}
+
+.cards.tiles h3 a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+@media (width >= 900px) {
+  .cards.tiles > ul > li {
+    min-height: 360px;
+  }
 }

@@ -5,23 +5,61 @@
 
 .hero {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: 360px;
+  padding: 64px 24px 48px;
+  background: linear-gradient(135deg, #1b1b1b 0%, #3a3a3a 60%, #4a0000 100%);
+  color: var(--background-color);
+}
+
+.hero > div {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero > div > div {
+  max-width: 640px;
 }
 
 .hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: 0;
+  color: inherit;
+}
+
+.hero p {
+  margin: 0.6em 0 0;
+  font-size: var(--body-font-size-m);
+}
+
+.hero p.button-wrapper {
+  display: inline-block;
+  margin: 24px 12px 0 0;
+}
+
+.hero a.button.secondary {
+  border-color: var(--background-color);
   color: var(--background-color);
+}
+
+.hero a.button.secondary:hover {
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 .hero picture {
   position: absolute;
   z-index: -1;
   inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+}
+
+.hero picture::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgb(0 0 0 / 75%) 0%, rgb(0 0 0 / 35%) 60%, rgb(0 0 0 / 10%) 100%);
 }
 
 .hero img {
@@ -30,8 +68,25 @@
   height: 100%;
 }
 
+.hero > div > div:has(> picture:only-child) {
+  position: static;
+}
+
+/* compact: L2 page header */
+.hero.compact {
+  min-height: 240px;
+  padding-top: 48px;
+  padding-bottom: 40px;
+}
+
 @media (width >= 900px) {
   .hero {
-    padding: 40px 32px;
+    min-height: 460px;
+    padding: 96px 32px 72px;
+  }
+
+  .hero.compact {
+    min-height: 320px;
+    padding: 72px 32px 56px;
   }
 }

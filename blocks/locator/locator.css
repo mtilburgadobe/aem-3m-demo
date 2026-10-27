@@ -1,0 +1,457 @@
+.locator {
+  --locator-red: var(--brand-red, #f00);
+  --locator-border: #d6d6d6;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+}
+
+.locator button,
+.locator input,
+.locator select,
+.locator textarea {
+  font: inherit;
+}
+
+.locator .locator-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.locator .locator-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 16px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-color);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.locator .locator-back::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-left: 2px solid currentcolor;
+  border-bottom: 2px solid currentcolor;
+  transform: rotate(45deg);
+}
+
+.locator .locator-search label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.locator .locator-search-row {
+  display: flex;
+}
+
+.locator .locator-search input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--text-color);
+  border-right: 0;
+  border-radius: 4px 0 0 4px;
+}
+
+.locator .locator-search button[type="submit"],
+.locator .locator-quote,
+.locator .locator-submit {
+  margin: 0;
+  padding: 10px 20px;
+  border: 1px solid var(--locator-red);
+  border-radius: 4px;
+  background: var(--locator-red);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.locator .locator-search button[type="submit"] {
+  border-radius: 0 4px 4px 0;
+}
+
+.locator .locator-search button[type="submit"]:hover,
+.locator .locator-quote:hover,
+.locator .locator-submit:hover {
+  background: #c00;
+  border-color: #c00;
+}
+
+.locator .locator-submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.locator .locator-geo {
+  margin: 10px 0 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-color);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.locator .locator-filters {
+  margin: 20px 0 0;
+  border-top: 1px solid var(--locator-border);
+  border-bottom: 1px solid var(--locator-border);
+}
+
+.locator .locator-filters summary {
+  padding: 12px 0;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.locator fieldset {
+  margin: 0 0 12px;
+  padding: 0;
+  border: 0;
+}
+
+.locator legend {
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.locator .locator-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+.locator .locator-check input {
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  flex-shrink: 0;
+  accent-color: var(--locator-red);
+}
+
+.locator .locator-status {
+  margin: 16px 0 8px;
+  font-weight: 700;
+}
+
+.locator .locator-status.error {
+  color: #b00;
+}
+
+.locator .locator-status.note,
+.locator .locator-status.empty,
+.locator .locator-status.loading {
+  font-weight: 400;
+}
+
+.locator .locator-results {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.locator .locator-result {
+  display: flex;
+  gap: 14px;
+  padding: 18px 12px;
+  border-bottom: 1px solid var(--locator-border);
+  border-left: 3px solid transparent;
+}
+
+.locator .locator-result.active {
+  border-left-color: var(--locator-red);
+  background: var(--light-color);
+}
+
+.locator .locator-num,
+.locator .locator-pin span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--locator-red);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.locator .locator-result-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.locator .locator-result-body p,
+.locator .locator-result-body address {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-style: normal;
+}
+
+.locator .locator-type {
+  color: #555;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.locator .locator-name {
+  margin: 0 0 4px;
+  font-family: var(--heading-font-family);
+  font-size: 20px;
+}
+
+.locator .locator-focus {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.locator .locator-focus:hover {
+  text-decoration: underline;
+}
+
+.locator .locator-distance {
+  font-weight: 700;
+}
+
+.locator .locator-links,
+.locator .locator-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 0 0 10px;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+}
+
+.locator .locator-links a {
+  color: var(--text-color);
+  text-decoration: underline;
+}
+
+.locator .locator-tags {
+  gap: 6px;
+}
+
+.locator .locator-tags li {
+  padding: 2px 8px;
+  border: 1px solid var(--locator-border);
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.locator .locator-map-wrap {
+  min-height: 320px;
+}
+
+.locator .locator-map {
+  height: 320px;
+  border: 1px solid var(--locator-border);
+  border-radius: 4px;
+  background: var(--light-color);
+}
+
+.locator.locator-no-map .locator-map-wrap {
+  display: none;
+}
+
+.locator .locator-pin {
+  background: none;
+  border: 0;
+}
+
+.locator .locator-pin span {
+  width: 30px;
+  height: 30px;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 40%);
+  font-size: 13px;
+}
+
+.locator .locator-pin.active span {
+  background: var(--text-color);
+}
+
+.locator .locator-dialog {
+  width: min(640px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  padding: 24px;
+  border: 0;
+  border-radius: 4px;
+  color: var(--text-color);
+}
+
+.locator .locator-dialog::backdrop {
+  background: rgb(0 0 0 / 60%);
+}
+
+.locator .locator-dialog-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.locator .locator-dialog h2 {
+  margin: 0;
+  font-family: var(--heading-font-family);
+}
+
+.locator .locator-close {
+  margin: 0;
+  padding: 0 8px;
+  border: 0;
+  background: none;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.locator .locator-grid {
+  display: grid;
+  gap: 0 16px;
+}
+
+.locator .locator-field {
+  margin-bottom: 12px;
+}
+
+.locator .locator-field > label:not(.locator-check) {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.locator .locator-field input:not([type="checkbox"]),
+.locator .locator-field select,
+.locator .locator-field textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #888;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.locator .locator-field [aria-invalid="true"] {
+  border-color: #b00;
+  outline-color: #b00;
+}
+
+.locator .locator-req {
+  color: #555;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.locator .locator-error {
+  margin: 4px 0 0;
+  color: #b00;
+  font-size: 14px;
+}
+
+.locator .locator-form-status {
+  padding: 10px 12px;
+  border-radius: 4px;
+  background: var(--light-color);
+}
+
+.locator .locator-form-status:empty {
+  display: none;
+}
+
+.locator .locator-form-status.success {
+  border-left: 4px solid #2a7a2a;
+}
+
+.locator .locator-form-status.error {
+  border-left: 4px solid #b00;
+}
+
+.locator .locator-dialog-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.locator .locator-demo {
+  color: #555;
+  font-size: 12px;
+}
+
+.locator :focus-visible {
+  outline: 2px solid var(--text-color);
+  outline-offset: 2px;
+}
+
+/* mobile: show the map between the status line and the results list */
+@media (width < 900px) {
+  .locator .locator-panel {
+    display: contents;
+  }
+
+  .locator .locator-map-wrap {
+    order: 1;
+  }
+
+  .locator .locator-results {
+    order: 2;
+  }
+}
+
+@media (width >= 600px) {
+  .locator .locator-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (width >= 900px) {
+  .locator {
+    display: grid;
+    grid-template-columns: minmax(340px, 2fr) 3fr;
+    align-items: start;
+    gap: 32px;
+  }
+
+  .locator .locator-results {
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+
+  .locator .locator-map-wrap {
+    position: sticky;
+    top: 24px;
+  }
+
+  .locator .locator-map {
+    height: max(480px, calc(100vh - 160px));
+  }
+}

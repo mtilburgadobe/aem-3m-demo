@@ -1,0 +1,57 @@
+.table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--body-font-size-s);
+}
+
+.table th {
+  border-bottom: 3px solid var(--brand-red);
+  font-weight: 700;
+  text-align: left;
+}
+
+.table th,
+.table td {
+  padding: 12px 16px;
+  vertical-align: top;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: var(--light-color);
+}
+
+.table td p {
+  margin: 0;
+}
+
+/* stacked cards on small screens */
+@media (width < 700px) {
+  .table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .table tbody tr {
+    display: block;
+    padding: 12px 0;
+  }
+
+  .table td {
+    display: grid;
+    grid-template-columns: 9em 1fr;
+    gap: 8px;
+    padding: 4px 12px;
+  }
+
+  .table td[data-label]::before {
+    content: attr(data-label);
+    font-weight: 700;
+  }
+}
