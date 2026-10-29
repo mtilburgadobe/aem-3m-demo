@@ -1,1 +1,44 @@
 /* add global styles that can be loaded post LCP here */
+
+/* consent banner */
+.consent-banner {
+  position: fixed;
+  inset: auto 16px 16px;
+  z-index: 100;
+  display: grid;
+  gap: 16px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px 24px;
+  border-top: 4px solid var(--brand-red);
+  background-color: var(--inverse-background-color);
+  color: var(--background-color);
+  font-size: var(--body-font-size-xs);
+  box-shadow: 0 8px 32px rgb(0 0 0 / 30%);
+}
+
+.consent-banner p {
+  margin: 0;
+}
+
+.consent-banner a:any-link {
+  color: var(--background-color);
+}
+
+.consent-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.consent-banner .button.secondary {
+  border-color: var(--background-color);
+  color: var(--background-color);
+}
+
+@media (width >= 900px) {
+  .consent-banner {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+}

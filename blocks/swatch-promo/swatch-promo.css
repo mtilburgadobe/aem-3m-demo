@@ -1,0 +1,68 @@
+.swatch-promo {
+  padding: 40px 24px;
+  background: radial-gradient(circle at 80% 20%, #3a3a3a 0%, #111 70%);
+  color: var(--background-color);
+}
+
+.swatch-promo-inner {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+}
+
+.swatch-promo-content > :first-child {
+  margin-top: 0;
+}
+
+.swatch-promo-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.swatch-promo-swatches a:any-link {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  color: var(--background-color);
+  font-size: var(--body-font-size-xs);
+  text-align: center;
+  text-decoration: none;
+}
+
+.swatch-promo-chip {
+  width: 64px;
+  height: 64px;
+  border: 2px solid rgb(255 255 255 / 40%);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 25%, rgb(255 255 255 / 45%) 0%, rgb(255 255 255 / 0%) 45%),
+    var(--swatch);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.swatch-promo-swatches a:hover .swatch-promo-chip,
+.swatch-promo-swatches a:focus-visible .swatch-promo-chip {
+  border-color: var(--background-color);
+  transform: scale(1.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swatch-promo-chip {
+    transition: none;
+  }
+}
+
+@media (width >= 900px) {
+  .swatch-promo {
+    padding: 64px;
+  }
+
+  .swatch-promo-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
+}

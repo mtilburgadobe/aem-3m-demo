@@ -1,0 +1,451 @@
+/* full-bleed dark studio */
+main .studio {
+  --studio-bg: #0b0c0e;
+  --studio-fg: #fff;
+  --studio-muted: #b9bec6;
+  --studio-line: rgb(255 255 255 / 18%);
+  --studio-red: var(--brand-red, #f00);
+
+  position: relative;
+  display: grid;
+  margin-inline: calc(50% - 50vw);
+  background: var(--studio-bg);
+  color: var(--studio-fg);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+}
+
+/* stage */
+main .studio .studio-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 10;
+  min-height: 240px;
+  overflow: hidden;
+  background: radial-gradient(ellipse 60% 55% at 50% 42%, #3a3d44 0%, #17181b 60%, #0b0c0e 100%);
+  transition: background 0.4s ease;
+}
+
+main .studio .studio-stage::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 45%;
+  background: linear-gradient(to bottom, transparent, rgb(0 0 0 / 35%));
+  pointer-events: none;
+}
+
+main .studio.light-daylight .studio-stage {
+  background: linear-gradient(to bottom, #8fb0cf 0%, #d6e2ec 55%, #b9c0c7 75%, #8a9097 100%);
+}
+
+main .studio.light-night .studio-stage {
+  background: radial-gradient(ellipse 70% 50% at 50% 70%, #1b2740 0%, #070a12 70%, #020306 100%);
+}
+
+main .studio .studio-cars {
+  position: relative;
+  z-index: 1;
+  width: min(92%, 980px);
+}
+
+main .studio .studio-car {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: filter 0.4s ease;
+}
+
+main .studio.angle-side .studio-car-front,
+main .studio.angle-front .studio-car-side {
+  display: none;
+}
+
+main .studio.light-daylight .studio-car { filter: brightness(1.06) contrast(1.04); }
+main .studio.light-night .studio-car { filter: brightness(0.62) saturate(0.85); }
+
+/* car artwork */
+main .studio .paint { fill: var(--wrap-color, #c8102e); }
+
+main .studio .ground {
+  fill: rgb(0 0 0 / 50%);
+  filter: blur(8px);
+}
+main .studio .glass-base { fill: #9fb2c6; }
+
+main .studio .glass-tint {
+  fill: #05080c;
+  fill-opacity: var(--tint, 0.58);
+}
+
+main .studio .glare { fill: rgb(255 255 255 / 16%); }
+main .studio .face { fill: rgb(0 0 0 / 18%); }
+main .studio .hood { fill: rgb(255 255 255 / 10%); }
+main .studio .grille { fill: #121315; }
+main .studio .trim { fill: #141517; }
+main .studio .lamp { fill: #e9f1fa; }
+main .studio .tail { fill: #9e0016; }
+
+main .studio .lines path {
+  fill: none;
+  stroke: rgb(0 0 0 / 35%);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+main .studio.light-night .lamp {
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff) drop-shadow(0 0 18px #cfe3ff);
+}
+
+main .studio.light-night .tail { filter: drop-shadow(0 0 8px #ff1f3d); }
+
+/* finish: specular layers */
+main .studio .spec,
+main .studio .soft,
+main .studio .ppf {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+main .studio.finish-gloss .spec { opacity: 1; }
+main .studio.finish-gloss .soft { opacity: 0.5; }
+main .studio.finish-satin .soft { opacity: 0.45; }
+main .studio.finish-matte .shade { opacity: 0.7; }
+main .studio.ppf-on .ppf { opacity: 1; }
+main .studio.ppf-on .spec { opacity: 1; }
+
+/* stage overlays */
+main .studio .studio-stage-controls {
+  position: absolute;
+  z-index: 2;
+  inset: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+}
+
+main .studio .studio-stage-controls > :last-child { align-self: flex-end; }
+
+main .studio .studio-toggles {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 55%);
+  backdrop-filter: blur(6px);
+  pointer-events: auto;
+}
+
+main .studio .studio-toggle {
+  border: 0;
+  border-radius: 999px;
+  padding: 5px 9px;
+  background: transparent;
+  color: var(--studio-fg);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+main .studio .studio-toggle[aria-pressed="true"] {
+  background: var(--studio-fg);
+  color: #111;
+}
+
+main .studio .studio-badge {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  right: 12px;
+  display: none;
+  border: 1px solid rgb(255 255 255 / 50%);
+  border-radius: 4px;
+  padding: 4px 10px;
+  background: rgb(0 0 0 / 45%);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+main .studio.ppf-on .studio-badge { display: block; }
+
+main .studio .studio-stage.is-embedded > :not(iframe, .studio-back) { display: none; }
+
+main .studio .studio-stage iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #fff;
+}
+
+main .studio .studio-back {
+  position: absolute;
+  z-index: 3;
+  top: 12px;
+  right: 12px;
+  background: rgb(0 0 0 / 70%);
+}
+
+/* control panel */
+main .studio .studio-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 20px 32px;
+}
+
+main .studio .studio-intro > * { margin: 0 0 8px; }
+
+main .studio .studio-intro h1,
+main .studio .studio-intro h2 {
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-l);
+  line-height: 1.1;
+}
+
+main .studio .studio-intro p { color: var(--studio-muted); }
+
+main .studio .studio-intro a {
+  color: var(--studio-fg);
+  text-decoration: underline;
+}
+
+main .studio .studio-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--studio-line);
+}
+
+main .studio [role="tab"] {
+  flex: 0 0 auto;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  padding: 10px 12px;
+  background: none;
+  color: var(--studio-muted);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+main .studio [role="tab"][aria-selected="true"] {
+  border-bottom-color: var(--studio-red);
+  color: var(--studio-fg);
+}
+
+main .studio .studio-tabpanel h3 {
+  margin: 0 0 10px;
+  font-family: var(--heading-font-family);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--studio-muted);
+}
+
+main .studio .studio-help {
+  margin: 0 0 12px;
+  color: var(--studio-muted);
+  font-size: 15px;
+}
+
+main .studio .studio-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 10px;
+}
+
+main .studio .studio-swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 8px 4px;
+  background: rgb(255 255 255 / 6%);
+  color: var(--studio-fg);
+  font-size: 13px;
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+}
+
+main .studio .studio-swatch:hover { background: rgb(255 255 255 / 12%); }
+
+main .studio .studio-swatch[aria-checked="true"] {
+  border-color: var(--studio-red);
+  background: rgb(255 255 255 / 12%);
+}
+
+main .studio .studio-chip {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 30%);
+}
+
+main .studio .studio-swatch.gloss .studio-chip {
+  background-image: radial-gradient(circle at 32% 28%, rgb(255 255 255 / 75%) 0 12%, transparent 40%);
+}
+
+main .studio .studio-swatch.satin .studio-chip {
+  background-image: radial-gradient(circle at 35% 30%, rgb(255 255 255 / 30%), transparent 65%);
+}
+
+main .studio .studio-vlt {
+  background: linear-gradient(rgb(5 8 12 / var(--v)), rgb(5 8 12 / var(--v))), #9fb2c6;
+}
+
+main .studio .studio-swatch-finish {
+  color: var(--studio-muted);
+  font-size: 12px;
+}
+
+main .studio .studio-tints { grid-template-columns: repeat(5, 1fr); }
+
+main .studio .studio-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border: 0;
+  padding: 4px 0;
+  background: none;
+  color: var(--studio-fg);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+main .studio .studio-switch-track {
+  position: relative;
+  width: 48px;
+  height: 26px;
+  border-radius: 13px;
+  background: #4a4d52;
+  transition: background 0.2s;
+}
+
+main .studio .studio-switch-track::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s;
+}
+
+main .studio .studio-switch[aria-checked="true"] .studio-switch-track { background: var(--studio-red); }
+main .studio .studio-switch[aria-checked="true"] .studio-switch-track::after { transform: translateX(22px); }
+
+main .studio .studio-summary {
+  margin: 0;
+  border-left: 3px solid var(--studio-red);
+  padding-left: 10px;
+  font-weight: 600;
+}
+
+main .studio .studio-note {
+  margin: 0;
+  color: var(--studio-muted);
+  font-size: 13px;
+}
+
+main .studio .studio-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+main .studio .studio-btn {
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid var(--studio-fg);
+  border-radius: 2.4em;
+  padding: 0.5em 1.3em;
+  background: transparent;
+  color: var(--studio-fg);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+main .studio .studio-btn.primary {
+  border-color: var(--studio-red);
+  background: var(--studio-red);
+}
+
+main .studio .studio-btn:hover {
+  filter: brightness(1.15);
+  text-decoration: none;
+}
+
+main .studio .studio-link {
+  color: var(--studio-fg);
+  font-size: 15px;
+  text-decoration: underline;
+}
+
+main .studio .studio-status {
+  color: #7dd88a;
+  font-size: 14px;
+}
+
+main .studio button:focus-visible,
+main .studio a:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main .studio *,
+  main .studio *::after {
+    transition: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  main .studio .paint { transition: fill 0.45s ease; }
+  main .studio .glass-tint { transition: fill-opacity 0.45s ease; }
+}
+
+@media (width >= 900px) {
+  main .studio {
+    grid-template-columns: minmax(0, 1fr) 400px;
+    min-height: min(88vh, 860px);
+  }
+
+  main .studio .studio-stage {
+    aspect-ratio: auto;
+    height: 100%;
+  }
+
+  main .studio .studio-stage-controls {
+    inset: 24px 24px auto;
+    flex-direction: row;
+  }
+
+  main .studio .studio-toggle {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  main .studio .studio-badge {
+    inset: auto auto 24px 24px;
+  }
+
+  main .studio .studio-panel {
+    padding: 40px 32px;
+    border-left: 1px solid var(--studio-line);
+    background: #121316;
+    overflow-y: auto;
+  }
+}

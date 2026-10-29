@@ -1,0 +1,47 @@
+.testimonial figure {
+  display: grid;
+  gap: 24px;
+  margin: 0;
+  padding: 40px 24px;
+  border-left: 6px solid var(--brand-red);
+  background-color: var(--light-color);
+}
+
+.testimonial blockquote {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-m);
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.testimonial blockquote p {
+  margin: 0;
+}
+
+.testimonial figcaption {
+  font-size: var(--body-font-size-s);
+}
+
+.testimonial figcaption p {
+  margin: 0;
+}
+
+.testimonial .testimonial-media img {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+@media (width >= 900px) {
+  .testimonial figure {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    padding: 56px 64px;
+  }
+
+  .testimonial figure > :not(.testimonial-media) {
+    grid-column: 2;
+  }
+}

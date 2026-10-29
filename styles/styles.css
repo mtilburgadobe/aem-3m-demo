@@ -12,12 +12,18 @@
 
 :root {
   /* colors */
+
+  /* provisional 3M palette – replace with values from the 3M visual identity PDF */
+  --brand-red: #f00;
+  --brand-red-dark: #c80000;
   --background-color: white;
-  --light-color: #f8f8f8;
-  --dark-color: #505050;
-  --text-color: #131313;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
+  --light-color: #f4f4f4;
+  --dark-color: #4b4b4b;
+  --text-color: #111;
+  --inverse-background-color: #111;
+  --border-color: #d6d6d6;
+  --link-color: #111;
+  --link-hover-color: var(--brand-red-dark);
 
   /* fonts */
   --body-font-family: roboto, roboto-fallback, sans-serif;
@@ -36,8 +42,8 @@
   --heading-font-size-s: 24px;
   --heading-font-size-xs: 22px;
 
-  /* nav height */
-  --nav-height: 64px;
+  /* nav height (placeholder until header loads) */
+  --nav-height: 200px;
 }
 
 /* fallback fonts */
@@ -85,7 +91,7 @@ body.appear {
 }
 
 header {
-  height: var(--nav-height);
+  min-height: var(--nav-height);
 }
 
 header .header,
@@ -107,8 +113,10 @@ h6 {
   margin-top: 0.8em;
   margin-bottom: 0.25em;
   font-family: var(--heading-font-family);
-  font-weight: 600;
-  line-height: 1.25;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
   scroll-margin: 40px;
 }
 
@@ -156,13 +164,19 @@ button {
 /* links */
 a:any-link {
   color: var(--link-color);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
   overflow-wrap: break-word;
 }
 
 a:hover {
   color: var(--link-hover-color);
   text-decoration: underline;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-red);
+  outline-offset: 2px;
 }
 
 /* buttons */
@@ -179,8 +193,8 @@ button.button {
   max-width: 100%;
   margin: 0;
   border: 2px solid transparent;
-  border-radius: 2.4em;
-  padding: 0.5em 1.2em;
+  border-radius: 4px;
+  padding: 0.65em 1.4em;
   font: inherit;
   font-weight: 500;
   line-height: 1.25;
@@ -199,8 +213,8 @@ button.button:disabled {
 
 a.button.primary,
 button.button.primary {
-  border-color: var(--text-color);
-  background-color: var(--text-color);
+  border-color: var(--brand-red);
+  background-color: var(--brand-red);
   color: var(--background-color);
 }
 
@@ -208,9 +222,9 @@ a.button.primary:hover,
 a.button.primary:focus-visible,
 button.button.primary:hover,
 button.button.primary:focus-visible {
-  border-color: var(--dark-color);
-  background-color: var(--dark-color);
-  color: var(--light-color);
+  border-color: var(--brand-red-dark);
+  background-color: var(--brand-red-dark);
+  color: var(--background-color);
 }
 
 a.button.primary[aria-disabled="true"],
@@ -254,8 +268,8 @@ button.button.secondary:disabled:focus-visible {
 /* high-impact call-to-action */
 a.button.accent,
 button.button.accent {
-  border-color: var(--link-color);
-  background-color: var(--link-color);
+  border-color: var(--text-color);
+  background-color: var(--text-color);
   color: var(--background-color);
 }
 
@@ -263,8 +277,9 @@ a.button.accent:hover,
 a.button.accent:focus-visible,
 button.button.accent:hover,
 button.button.accent:focus-visible {
-  border-color: var(--link-hover-color);
-  background-color: var(--link-hover-color);
+  border-color: var(--dark-color);
+  background-color: var(--dark-color);
+  color: var(--background-color);
 }
 
 a.button.accent[aria-disabled="true"],
@@ -322,4 +337,47 @@ main .section.highlight {
   background-color: var(--light-color);
   margin: 0;
   padding: 40px 0;
+}
+
+main .section.dark {
+  background-color: var(--inverse-background-color);
+  color: var(--background-color);
+  margin: 0;
+  padding: 56px 0;
+}
+
+main .section.dark a:any-link:not(.button) {
+  color: var(--background-color);
+}
+
+main .section.dark a.button.secondary {
+  border-color: var(--background-color);
+  color: var(--background-color);
+}
+
+main .section.dark a.button.secondary:hover {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+main .section.centered > div > h2,
+main .section.centered > .default-content-wrapper {
+  text-align: center;
+}
+
+main .section.centered > .default-content-wrapper > p {
+  max-width: 70ch;
+  margin-inline: auto;
+}
+
+/* demo notice for placeholder content */
+main .section.demo-note {
+  margin: 0;
+  padding: 10px 0;
+  background-color: #fff4cc;
+  font-size: var(--body-font-size-xs);
+}
+
+main .section.demo-note .default-content-wrapper > p {
+  margin: 0;
 }
